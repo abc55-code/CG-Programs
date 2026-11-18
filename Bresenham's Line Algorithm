@@ -1,0 +1,144 @@
+#include<GL/glut.h>
+#include<stdlib.h>
+#include<iostream>
+using namespace std;
+float x1,x2,yy1,y2;
+void simpleline();
+void dashedline();
+void dottedline();
+float dy,dx,e,x,y,i;
+void display()
+{
+cout<<"\nsimpleline\n";
+simpleline();
+cout<<"\ndashedline\n";
+dashedline();
+cout<<"\ndottedline\n";
+dottedline();
+}
+void simpleline()
+{
+cout<<"Enter the value of x1:";
+cin>>x1;
+cout<<"Enter the value of yy1:";
+cin>>yy1;
+cout<<"Enter the value of x2:";
+cin>>x2;
+cout<<"Enter the value of y2:";
+cin>>y2;
+dx=x2-x1;
+dy=y2-yy1;
+x=x1;
+y=yy1;
+e=2*dy-dx;
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glColor3f(1.0,0.0,0.0);
+glEnd();
+int i;
+for(i=1;i<=dx;i++)
+{
+if(e>0)
+{
+y=y+1;
+e=e-2*dx;
+}
+x=x+1;
+e=e+2*dy;
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+glFlush();
+}
+void dashedline()
+{
+cout<<"Enter the value of x1:";
+cin>>x1;
+cout<<"Enter the value of yy1:";
+cin>>yy1;
+cout<<"Enter the value of x2:";
+cin>>x2;
+cout<<"Enter the value of y2:";
+cin>>y2;
+dx=x2-x1;
+dy=y2-yy1;
+e=2*dy-dx;
+x=x1;
+y=yy1;
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glColor3f(0.0,1.0,0.0);
+for(int i=0;i<dx;i++)
+{
+if(e>0)
+{
+y=y+1;
+e=e-2*dx;
+}
+x=x+1;
+e=e+2*dy;
+if(i%5==0)
+{
+glVertex2i(x,y);
+}
+}
+glEnd();
+glFlush();
+}
+void dottedline()
+{
+cout<<"Enter the value of x1:";
+cin>>x1;
+cout<<"Enter the value of yy1:";
+cin>>yy1;
+cout<<"Enter the value of x2:";
+cin>>x2;
+cout<<"Enter the value of y2:";
+cin>>y2;
+dx=x2-x1;
+dy=y2-yy1;
+x=x1;
+y=yy1;
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glColor3f(0.0,0.0,1.0);
+for(int i=0;i<dx;i++)
+{
+if(e>0)
+{
+}
+x=x+1;
+y=y+1;
+e=e-2*dx;
+e=e+2*dy;
+if(i%2==0)
+{
+glVertex2i(x,y);
+}
+}
+glEnd();
+glFlush();
+}
+void init(void)
+{
+glClearColor(0.0,0.0,0.0,0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0,499,0,499);
+}
+int main(int argc,char**argv)
+{
+glutInit(&argc,argv);
+glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+glClearColor(0.0,0.0,0.0,0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+glutInitWindowSize(500,500);
+glutInitWindowPosition(100,100);
+glutCreateWindow("Bresenham's Line Algorithm");
+init();
+glutDisplayFunc(display);
+glutMainLoop();
+return 0;
+}
